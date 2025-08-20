@@ -1,4 +1,10 @@
+import type { Book } from '@/data/books';
 import { createContext, useContext } from 'react';
+
+export interface BasketItem {
+  book: Book;
+  quantity: number;
+}
 
 export interface AppContextType {
   user: boolean;

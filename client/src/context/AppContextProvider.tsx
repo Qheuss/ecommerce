@@ -1,18 +1,14 @@
+import { type ReactNode, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { AppContext } from './app-context';
+import { AppContext, type AppContextType } from './app-context';
 
-export const AppContextProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState(false);
   const [isSeller, setIsSeller] = useState(false);
   const [showUserLogin, setShowUserLogin] = useState(false);
 
-  const value = {
+  const value: AppContextType = {
     navigate,
     user,
     setUser,

@@ -9,4 +9,13 @@
 @theme {
   --color-primary: #4b2e1f;
   --color-primary-dull: #6b4632;
+  --color-accent1: #d9c9b1;
+  --color-accent2: #a67c52;
+  --color-text: #1c1c1c;
+}
+
+@layer components {
+  html {
+    color: var(--color-text);
+  }
 }

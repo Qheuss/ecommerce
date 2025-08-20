@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { assets } from '@/assets/assets';
 import { useAppContext } from '@/context/app-context';
+import { useCart } from '@/context/cart-context';
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -12,27 +12,26 @@ const Navbar = () => {
     navigate('/');
   };
 
+  const { cart } = useCart();
+
+  const cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);
+
   return (
     <nav className='flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 shadow-md bg-white relative transition-all'>
       <NavLink to='/' onClick={() => setOpen(false)}>
-        <img
-          src={assets.logo}
-          alt='logo'
-          className='w-32 h-auto object-contain'
-        />
+        <img src='./logo.svg' alt='logo' height={86} width={86} />
       </NavLink>
 
       {/* Desktop Menu */}
       <div className='hidden sm:flex items-center gap-8'>
         <NavLink to='/'>Home</NavLink>
         <NavLink to='/books'>All Books</NavLink>
-        <NavLink to='/contact'>Contact</NavLink>
 
         <div className='hidden lg:flex items-center text-sm gap-2 border border-gray-300 px-3 rounded-full'>
           <input
             className='py-1.5 w-full bg-transparent outline-none placeholder-gray-500'
             type='text'
-            placeholder='Search products'
+            placeholder='Search books'
           />
           <svg
             width='16'
@@ -80,16 +79,12 @@ const Navbar = () => {
             />
           </svg>
           <button className='absolute -top-2 -right-3 text-xs text-white bg-primary w-[18px] h-[18px] rounded-full'>
-            0
+            {cartItemCount}
           </button>
         </div>
         {user ? (
           <div className='relative group'>
-            <img
-              src={assets.profile_icon}
-              alt='profile_icon'
-              className='w-10'
-            />
+            <img src='./profile_icon.svg' alt='profile_icon' className='w-10' />
             <ul className='absolute hidden group-hover:flex flex-col items-center bg-white shadow-md rounded-lg text-sm text-gray-700 top-10 right-0 w-30 p-2'>
               <li
                 className='p-1.5 hover:text-primary cursor-pointer'
@@ -151,7 +146,6 @@ const Navbar = () => {
             My Orders
           </NavLink>
         )}
-        <NavLink to='/contact'>Contact</NavLink>
 
         {user ? (
           <button
