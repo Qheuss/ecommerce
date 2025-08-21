@@ -5,14 +5,17 @@ import App from './App.tsx';
 import { BrowserRouter } from 'react-router-dom';
 import { AppContextProvider } from './context/AppContextProvider.tsx';
 import { CartContextProvider } from './context/CartContextProvider.tsx';
+import { BooksContextProvider } from './context/BooksContextProvider.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
       <CartContextProvider>
-        <AppContextProvider>
-          <App />
-        </AppContextProvider>
+        <BooksContextProvider>
+          <AppContextProvider>
+            <App />
+          </AppContextProvider>
+        </BooksContextProvider>
       </CartContextProvider>
     </BrowserRouter>
   </StrictMode>

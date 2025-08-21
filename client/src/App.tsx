@@ -5,6 +5,7 @@ import Book from './pages/Book';
 import Books from './pages/Books';
 import Layout from './components/Layout';
 import Cart from './pages/Cart';
+import Admin from './pages/Admin';
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
         <Route path='/books' element={<Books />} />
         <Route path='/books/:id/:slug' element={<Book />} />
         <Route path='/cart' element={<Cart />} />
-
+        <Route path='/admin' element={<Admin />} />
         <Route path='*' element={<NotFound />} />
       </Route>
     </Routes>

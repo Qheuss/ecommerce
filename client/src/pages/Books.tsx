@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { books, slugify } from '@/data/books';
+import { slugify } from '@/data/books';
 import Categories from '@/components/Categories';
 import { FaCartShopping, FaPlus } from 'react-icons/fa6';
 import { useCart } from '@/context/cart-context';
+import { useBooks } from '@/context/books-context';
 
 const BooksPage = () => {
+  const { books } = useBooks();
+  const { addToCart } = useCart();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const categories = Array.from(new Set(books.map((book) => book.category)));
@@ -13,8 +16,6 @@ const BooksPage = () => {
   const filteredBooks = selectedCategory
     ? books.filter((book) => book.category === selectedCategory)
     : books;
-
-  const { addToCart } = useCart();
 
   return (
     <div className='flex p-4 gap-6'>
@@ -36,14 +37,14 @@ const BooksPage = () => {
                   <div className='relative w-full h-full transition-transform duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]'>
                     <div className='absolute w-full h-full [backface-visibility:hidden] rounded-lg overflow-hidden border shadow'>
                       <img
-                        src={`https://picsum.photos/200/300?random=${book.id}`}
+                        src={book.cover}
                         alt={book.title}
                         className='w-full h-full object-cover'
                       />
                     </div>
 
-                    <div className='absolute w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-lg border shadow p-4 flex items-center justify-center bg-white text-center'>
-                      <p className='text-sm text-gray-800'>
+                    <div className='absolute w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-lg border shadow p-4 flex items-center justify-center bg-accent1 text-center'>
+                      <p className='text-sm text-text'>
                         {book.description.length > 100
                           ? book.description.slice(0, 100) + '...'
                           : book.description}
@@ -69,7 +70,11 @@ const BooksPage = () => {
                   to={`/books/${book.id}/${slugify(book.title)}`}
                   className='mt-2 text-center w-full'
                 >
-                  <h2 className='text-md font-semibold'>{book.title}</h2>
+                  <h2 className='text-md font-semibold'>
+                    {book.title.length > 50
+                      ? book.title.slice(0, 50) + '...'
+                      : book.title}
+                  </h2>
                   <p className='text-sm text-gray-600'>{book.author}</p>
                 </Link>
               </div>
