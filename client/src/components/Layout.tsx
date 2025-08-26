@@ -9,9 +9,12 @@ const Layout = () => {
         <Outlet />
       </main>
       <footer className='text-center py-4 bg-gray-100 mt-8'>
-        <p className='text-sm text-gray-600'>
+        <a
+          href='https://www.linkedin.com/in/quentin-heusse/'
+          className='text-sm text-gray-600'
+        >
           © {new Date().getFullYear()} Quentin Heusse
-        </p>
+        </a>
       </footer>
     </div>
   );
