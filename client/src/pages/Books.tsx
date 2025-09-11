@@ -1,14 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { slugify } from '@/data/books';
 import Categories from '@/components/Categories';
 import { FaCartShopping, FaPlus } from 'react-icons/fa6';
-import { useCart } from '@/context/cart-context';
-import { useBooks } from '@/context/books-context';
+import { useCartStore } from '@/stores/cart.store';
+import { useBooksStore } from '@/stores/books.store';
 
 const BooksPage = () => {
-  const { books } = useBooks();
-  const { addToCart } = useCart();
+  const books = useBooksStore((s) => s.books);
+  const fetchBooks = useBooksStore((s) => s.fetchBooks);
+  const addToCart = useCartStore((s) => s.addToCart);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const categories = Array.from(new Set(books.map((book) => book.category)));
@@ -16,6 +17,10 @@ const BooksPage = () => {
   const filteredBooks = selectedCategory
     ? books.filter((book) => book.category === selectedCategory)
     : books;
+
+  useEffect(() => {
+    fetchBooks();
+  }, [fetchBooks]);
 
   return (
     <div className='flex p-4 gap-6'>

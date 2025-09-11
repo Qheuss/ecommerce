@@ -1,7 +1,13 @@
-import { useCart } from '@/context/cart-context';
+import {
+  useCartStore,
+  useTotalItems,
+  useTotalPrice,
+} from '@/stores/cart.store';
 
 const Cart = () => {
-  const { cart } = useCart();
+  const cart = useCartStore((s) => s.cart);
+  const totalItems = useTotalItems();
+  const totalPrice = useTotalPrice();
 
   return (
     <div>
@@ -13,6 +19,10 @@ const Cart = () => {
           </li>
         ))}
       </ul>
+      <div>
+        <p>Total Items: {totalItems}</p>
+        <p>Total Price: ${totalPrice.toFixed(2)}</p>
+      </div>
     </div>
   );
 };

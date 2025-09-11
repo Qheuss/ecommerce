@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import styles from './BestSeller.module.scss';
-import { useBooks } from '@/context/books-context';
+import { useBooksStore } from '@/stores/books.store';
 
 const BestSeller = () => {
   const [stopScroll, setStopScroll] = useState(false);
-  const { books } = useBooks();
+  const books = useBooksStore((s) => s.books);
 
   return (
     <div className='mt-16'>

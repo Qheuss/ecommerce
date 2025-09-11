@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { type Book } from '@/data/books';
+import { useBooksStore } from '@/stores/books.store';
 
 interface GoogleBookVolumeInfo {
   title: string;
@@ -27,6 +28,8 @@ const AdminBookSearch = () => {
   const [results, setResults] = useState<Book[]>([]);
   const [loading, setLoading] = useState(false);
 
+  const addBook = useBooksStore((s) => s.addBook);
+
   const searchBooks = async () => {
     if (!query) return;
 
@@ -51,6 +54,8 @@ const AdminBookSearch = () => {
             'https://via.placeholder.com/150x200.png?text=No+Cover',
           rating: item.volumeInfo.averageRating,
           category: item.volumeInfo.categories?.[0] ?? 'Other',
+          price: Math.floor(Math.random() * 20) + 5,
+          stock: Math.floor(Math.random() * 20) + 1,
         })) ?? [];
 
       setResults(books);
@@ -60,15 +65,6 @@ const AdminBookSearch = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  const addBook = async (book: Book) => {
-    await fetch('http://localhost:4000/books', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(book),
-    });
-    alert(`${book.title} added to your library`);
   };
 
   return (

@@ -6,6 +6,8 @@ export interface Book {
   cover: string;
   rating?: number;
   category: string;
+  price: number;
+  stock: number;
 }
 
 export const slugify = (title: string) =>

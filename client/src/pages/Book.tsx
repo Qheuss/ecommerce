@@ -1,8 +1,8 @@
-import { useBooks } from '@/context/books-context';
+import { useBooksStore } from '@/stores/books.store';
 import { useParams } from 'react-router-dom';
 
 const BookPage = () => {
-  const { books } = useBooks();
+  const books = useBooksStore((s) => s.books);
   const { id } = useParams<{ id: string }>();
   const book = books.find((b) => b.id === id);
 

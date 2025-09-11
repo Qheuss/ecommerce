@@ -16,5 +16,25 @@ app.post('/books', (req, res) => {
   res.status(201).json(book);
 });
 
+app.put('/books/:id', (req, res) => {
+  const { id } = req.params;
+  const index = books.findIndex((b) => b.id === id);
+  if (index !== -1) {
+    books[index] = { ...books[index], ...req.body };
+    return res.json(books[index]);
+  }
+  res.status(404).json({ message: 'Book not found' });
+});
+
+app.delete('/books/:id', (req, res) => {
+  const { id } = req.params;
+  const index = books.findIndex((b) => b.id === id);
+  if (index !== -1) {
+    const deletedBook = books.splice(index, 1);
+    return res.json(deletedBook[0]);
+  }
+  res.status(404).json({ message: 'Book not found' });
+});
+
 const PORT = 4000;
 app.listen(PORT, () => console.log(`API running on http://localhost:${PORT}`));
