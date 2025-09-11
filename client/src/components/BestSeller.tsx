@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import styles from './BestSeller.module.scss';
 import { useBooksStore } from '@/stores/books.store';
+import { Link } from 'react-router-dom';
+import { slugify } from '@/data/books';
 
 const BestSeller = () => {
   const [stopScroll, setStopScroll] = useState(false);
@@ -31,16 +33,18 @@ const BestSeller = () => {
                     key={index}
                     className='w-56 mx-4 h-[20rem] relative group hover:scale-90 transition-all duration-300 cursor-pointer'
                   >
-                    <img
-                      src={book.cover}
-                      alt='card'
-                      className='w-full h-full object-cover'
-                    />
-                    <div className='flex items-center justify-center px-4 opacity-0 group-hover:opacity-100 transition-all duration-300 absolute bottom-0 backdrop-blur-md left-0 w-full h-full bg-black/20'>
-                      <p className='text-white text-lg font-semibold text-center'>
-                        {book.title}
-                      </p>
-                    </div>
+                    <Link to={`/books/${book.id}/${slugify(book.title)}`}>
+                      <img
+                        src={book.cover}
+                        alt='Book cover'
+                        className='w-full h-full object-cover'
+                      />
+                      <div className='flex items-center justify-center px-4 opacity-0 group-hover:opacity-100 transition-all duration-300 absolute bottom-0 backdrop-blur-md left-0 w-full h-full bg-black/20'>
+                        <p className='text-white text-lg font-semibold text-center'>
+                          {book.title}
+                        </p>
+                      </div>
+                    </Link>
                   </li>
                 )
             )}
