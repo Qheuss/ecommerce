@@ -1,11 +1,11 @@
 import express from 'express';
 import cors from 'cors';
+import fs from 'fs';
 
 const app = express();
 app.use(cors());
 app.use(express.json());
-
-let books = [];
+let books = JSON.parse(fs.readFileSync('./books.json', 'utf-8')) || [];
 
 app.get('/books', (req, res) => res.json(books));
 

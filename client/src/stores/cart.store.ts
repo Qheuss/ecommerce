@@ -10,7 +10,7 @@ type CartItem = {
 type CartStoreType = {
   cart: CartItem[];
   addToCart: (item: Book) => void;
-  decreaseQuantity: (id: string) => void;
+  updateQuantity: (id: string, quantity: number) => void;
   removeFromCart: (id: string) => void;
   clearCart: () => void;
 };
@@ -38,24 +38,17 @@ export const useCartStore = create<CartStoreType>()(
           }
         }),
 
-      decreaseQuantity: (id) =>
+      updateQuantity: (id, quantity) =>
         set((state) => {
-          const existingItem = state.cart.find(
-            (cartItem) => cartItem.book.id === id
-          );
-          if (!existingItem) return { cart: state.cart };
-
-          if (existingItem.quantity > 1) {
+          if (quantity <= 0) {
             return {
-              cart: state.cart.map((cartItem) =>
-                cartItem.book.id === id
-                  ? { ...cartItem, quantity: cartItem.quantity - 1 }
-                  : cartItem
-              ),
+              cart: state.cart.filter((cartItem) => cartItem.book.id !== id),
             };
           } else {
             return {
-              cart: state.cart.filter((cartItem) => cartItem.book.id !== id),
+              cart: state.cart.map((cartItem) =>
+                cartItem.book.id === id ? { ...cartItem, quantity } : cartItem
+              ),
             };
           }
         }),

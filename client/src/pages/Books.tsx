@@ -37,7 +37,10 @@ const BooksPage = () => {
         <ul className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6'>
           {filteredBooks.map((book) => (
             <li key={book.id} className='relative'>
-              <Link to={`/books/${book.id}/${slugify(book.title)}`}>
+              <Link
+                to={`/books/${book.id}/${slugify(book.title)}`}
+                className='relative'
+              >
                 <div className='group w-full h-80 [perspective:1000px] cursor-pointer'>
                   <div className='relative w-full h-full transition-transform duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]'>
                     <div className='absolute w-full h-full [backface-visibility:hidden] rounded-lg overflow-hidden border shadow'>
@@ -57,6 +60,12 @@ const BooksPage = () => {
                     </div>
                   </div>
                 </div>
+                <span className='absolute top-2 right-2 bg-white text-xs text-gray-600 px-2 py-1 rounded'>
+                  {book.stock > 0 ? 'In Stock' : 'Out of Stock'}
+                </span>
+                <span className='absolute bottom-2 left-2 bg-white text-sm text-gray-800 font-semibold px-2 py-1 rounded shadow-md'>
+                  {book.price}€
+                </span>
               </Link>
               <button
                 onClick={(e) => {
